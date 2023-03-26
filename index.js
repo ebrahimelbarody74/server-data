@@ -81,6 +81,6 @@ app.get("/api/userdb", async (req, res) => {
   const orders = await User.find();
   res.send(orders);
 });
-app.listen(6000, () => {
+app.listen(6000||process.env.PORT, () => {
   console.log("Running....");
 });
