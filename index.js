@@ -79,7 +79,7 @@ app.post("/api/login", async (req, res) => {
 
 app.get("/api/userdb", async (req, res) => {
   const orders = await User.find();
-  res.send(orders);
+  return res.status(200).json(orders);
 });
 
 app.get("/test", (req, res) => {
