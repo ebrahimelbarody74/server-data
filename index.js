@@ -79,9 +79,8 @@ app.post("/api/login", async (req, res) => {
 
 app.get("/api/userdb", async (req, res) => {
   const orders = await User.find();
-  return res.send(orders);
+  return res.status(200).json(orders);
 });
-
 
 const port = 6000 || process.env.PORT;
 app.listen(6000, () => {
