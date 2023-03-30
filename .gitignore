@@ -1,1 +1,6 @@
-node_modules
+package-local.json
+node_modules/*
+.idea/*
+
+images/*
+!images/.gitkeep
