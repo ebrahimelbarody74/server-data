@@ -86,6 +86,6 @@ app.get("/api/userdb", async (req, res) => {
 });
 
 const port = 6000 || process.env.PORT;
-app.listen(6000, () => {
+app.listen(port, () => {
   console.log("Running....");
 });
