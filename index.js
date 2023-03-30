@@ -49,6 +49,49 @@ const User = mongoose.model(
   )
 );
 
+const Product = mongoose.model(
+  "product",
+  new mongoose.Schema(
+    {
+      img: {
+        type: String,
+        required: true,
+      },
+      name: {
+        type: String,
+        required: true,
+      },
+      text: {
+        type: String,
+        required: true,
+      },
+      type: {
+        type: String,
+      },
+      size: {
+        type: Array,
+      },
+      color: {
+        type: Array,
+      },
+      gender: {
+        type: String,
+        required: true,
+      },
+      price: {
+        type: String,
+      },
+      status: {
+        type: String,
+        default: true,
+      },
+    },
+    {
+      timestamps: true,
+    }
+  )
+);
+
 app.post("/api/userdb", async (req, res) => {
   const newProduct = new User({
     fname: req.body.fname,
@@ -84,6 +127,21 @@ app.get("/api/userdb", async (req, res) => {
   const orders = await User.find();
   return res.status(200).json(orders);
 });
+
+//product
+
+app.post("/api/products", async (req, res) => {
+  const newProduct = new Product(req.body);
+  let saveProduct = await newProduct.save();
+  return res.send(saveProduct);
+});
+
+app.get("/api/products", async (req, res) => {
+  const products = await Product.find();
+  return res.status(200).json(products);
+});
+
+/////
 
 const port = 6000 || process.env.PORT;
 app.listen(port, () => {
