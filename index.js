@@ -6,9 +6,12 @@ const app = express();
 app.use(bodyParser.json());
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/orico-shop", {
-    useNewUrlParser: true,
-  })
+  .connect(
+    "mongodb://ebrahim:123@ac-0k5qbva-shard-00-00.ionptfc.mongodb.net:27017,ac-0k5qbva-shard-00-01.ionptfc.mongodb.net:27017,ac-0k5qbva-shard-00-02.ionptfc.mongodb.net:27017/Orico-shop?ssl=true&replicaSet=atlas-pxmwai-shard-0&authSource=admin&retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+    }
+  )
   .then((result) => console.log("connection"))
   .catch((err) => console.log(err));
 
