@@ -1,8 +1,36 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
+const multer = require("multer");
+
+///////////////////
+const storage = multer.diskStorage({
+  destination: (req, res, cb) => {
+    cb(null, "upload");
+  },
+  filename: (req, res, cb) => {
+    cb(null, file.originalname);
+  },
+});
+//////////
+const filter = (req, res, cb) => {
+  if (file.mimtype == "image/jpeg" || file.mimtype == "image/jpg") {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+////////////////////
+
+const upload = multer({
+  storage: storage,
+  fileFilter: filter,
+});
+/////////////////
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 mongoose
@@ -131,7 +159,16 @@ app.get("/api/userdb", async (req, res) => {
 //product
 
 app.post("/api/products", async (req, res) => {
-  const newProduct = new Product(req.body);
+  const newProduct = new Product({
+    img: req.body.img,
+    name: req.body.name,
+    text: req.body.text,
+    type: req.body.type,
+    size: req.body.size,
+    color: req.body.color,
+    gender: req.body.gender,
+    price: req.body.price,
+  });
   let saveProduct = await newProduct.save();
   return res.send(saveProduct);
 });
