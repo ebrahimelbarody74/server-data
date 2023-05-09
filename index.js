@@ -29,6 +29,8 @@ const upload = multer({
   fileFilter: filter,
 });
 /////////////////
+const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 mongoose
@@ -40,7 +42,7 @@ mongoose
   )
   .then((result) => console.log("connection"))
   .catch((err) => console.log(err));
-  
+
 const User = mongoose.model(
   "user",
   new mongoose.Schema(
@@ -72,7 +74,7 @@ const User = mongoose.model(
     {
       timestamps: true,
     }
-    )
+  )
 );
 
 const Product = mongoose.model(
@@ -116,17 +118,17 @@ const Product = mongoose.model(
       timestamps: true,
     }
   )
-  );
-  
-  app.post("/api/register", async (req, res) => {
-    const newProduct = new User({
-      fname: req.body.fname,
-      lname: req.body.lname,
-      email: req.body.email,
-      password: req.body.password,
-    });
-    let saveProduct = await newProduct.save();
-    return res.send(saveProduct);
+);
+
+app.post("/api/register", async (req, res) => {
+  const newProduct = new User({
+    fname: req.body.fname,
+    lname: req.body.lname,
+    email: req.body.email,
+    password: req.body.password,
+  });
+  let saveProduct = await newProduct.save();
+  return res.send(saveProduct);
 });
 
 app.post("/api/login", async (req, res) => {
@@ -135,9 +137,9 @@ app.post("/api/login", async (req, res) => {
     if (!user) {
       return res.status(401).json("Wrong credential eamil");
     }
-    
+
     const password = user.password;
-    
+
     if (password !== req.body.password) {
       return res.status(401).json("Wrong credential pass");
     }
@@ -156,8 +158,6 @@ app.get("/api/userdb", async (req, res) => {
 
 //product
 
-const app = express();
-app.use(cors());
 app.post("/api/products", async (req, res) => {
   const newProduct = new Product({
     img: req.body.img,
